@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import s from './Form.module.css';
-import PropTypes from 'prop-types';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/store';
 
 const Form = ({ handleSubmitContacts }) => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -11,9 +15,14 @@ const Form = ({ handleSubmitContacts }) => {
     e.preventDefault();
 
     const data = { id: uuidv4(), name, number };
-    handleSubmitContacts(data);
+    contacts.find(
+      contact => contact.name.toLowerCase() === data.name.toLowerCase()
+    )
+      ? window.alert(`${data.name} is already in contacts`)
+      : dispatch(addContact(data));
     resetForm();
   };
+
   const resetForm = () => {
     setName('');
     setNumber('');
@@ -64,7 +73,5 @@ const Form = ({ handleSubmitContacts }) => {
     </>
   );
 };
-Form.propTypes = {
-  handleSubmitContacts: PropTypes.func,
-};
+
 export default Form;
