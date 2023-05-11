@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import s from './Form.module.css';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/store';
+import { addContact } from 'redux/constantsSlice';
 
 const Form = ({ handleSubmitContacts }) => {
   const dispatch = useDispatch();
