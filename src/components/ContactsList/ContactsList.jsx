@@ -5,9 +5,9 @@ import { deleteContact } from 'redux/store';
 
 const ContactsList = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(state => state.contacts.data);
   const filter = useSelector(state => state.filter);
-
+  console.log(contacts);
   const filterContacts = () => {
     if (filter === '') return contacts;
     return contacts.filter(el =>
@@ -32,6 +32,7 @@ const ContactsList = () => {
                   type="button"
                   className={s.btn}
                   onClick={e => {
+                    console.log(e.target.id);
                     dispatch(deleteContact(e.target.id));
                   }}
                 >
